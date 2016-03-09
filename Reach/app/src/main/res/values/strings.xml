@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">Reach</string>
-    <string name="invalid_username">Username Empty</string>
-    <string name="invalid_password">Password empty</string>
-    <string name="invalid_login">Login failed</string>
-</resources>
