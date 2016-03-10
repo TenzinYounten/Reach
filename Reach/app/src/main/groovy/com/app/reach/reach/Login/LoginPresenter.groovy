@@ -60,7 +60,7 @@ public class LoginPresenter {
     }
 
     @Subscribe
-    public void onEvent(LoginEvent event){
+    public void onEvent(SuccessfulLoginEvent event){
         Log.d("onEvent log", "onEvent before response"+event )
         if(event.getUser()!= null) {
             view.startMainActivity()

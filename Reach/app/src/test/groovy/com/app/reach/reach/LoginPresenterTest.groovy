@@ -1,8 +1,10 @@
 package com.app.reach.reach
-
+import com.app.reach.model.User
+import com.app.reach.reach.Login.SuccessfulLoginEvent
 import com.app.reach.reach.Login.LoginPresenter
 import com.app.reach.reach.Login.LoginService
 import com.app.reach.reach.Login.LoginView
+import org.greenrobot.eventbus.EventBus
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.robospock.internal.GradleRoboSputnik
@@ -14,8 +16,12 @@ import spock.lang.Unroll
 public class LoginPresenterTest extends Specification {
 
     private LoginView view = Mock(LoginView);
-    private LoginService service = Mock(LoginService);
+    private LoginService service = Mock(LoginService)
+
+    private User user = Mock(User)
+    private SuccessfulLoginEvent event = Mock(SuccessfulLoginEvent)
     private LoginPresenter presenter = new LoginPresenter(view, service);
+    private EventBus bus = Mock(EventBus)
     //private loginActivity = Mock(LoginActivity)
 
     //def usernameView = loginActivity.findViewById(R.id.username);
@@ -104,31 +110,9 @@ public class LoginPresenterTest extends Specification {
     }
 
     @Unroll
-    def "On invalid login error message should be displayed"() {
+    def "If login is called no error message should be displayed"() {
         given:
-        view.getUsername() >> username
-        view.getPassword() >> password
-
-        when:
-        def result = presenter.login(username, password)
-
-        then:
-        result == extectedResult
-        and:
-        1 * view.showLoginError(R.string.invalid_login)
-
-        where:
-        username   | password   | extectedResult
-        ""         | ""         | false
-       // "username" | "password" | false
-    }
-
-    @Unroll
-    def "On valid login no error message should be displayed"() {
-        given:
-        view.getUsername() >> username
-        view.getPassword() >> password
-        service.login(_, _) >> true
+        service.login(_, _)  >> true
 
         when:
         def result = presenter.login(username, password)
@@ -137,12 +121,36 @@ public class LoginPresenterTest extends Specification {
         //def mainActivity = new Context.startActivity(new Intent(context, MainActivity.class))
 
         then:
-        1* view.startMainActivity()
+        result == expectedResult
 
         where:
-        username   | password   | extectedResult
-        "jack"     | "jack"     | true
+        username | password | expectedResult
+        "abc"     |"abx "   | true
+
+
     }
+
+ /*   @Unroll
+    def "On invalid login error message should be displayed"() {
+
+        given:
+
+        user = null
+
+
+
+        when:
+        event = new SuccessfulLoginEvent(user)
+
+        bus.getDefault()
+        bus.post(event)
+
+        then:
+        1* view.showLoginError(R.string.invalid_login)
+
+    }*/
+
+
 
     /* @Unroll
      def "should enable login button"() {

@@ -3,10 +3,10 @@ import com.app.reach.model.User
 /**
  * Created by tenzin on 8/3/16.
  */
-public class LoginEvent {
+public class SuccessfulLoginEvent {
     User user
 
-    public LoginEvent(User user) {
+    public SuccessfulLoginEvent(User user) {
         this.user = user
     }
 
