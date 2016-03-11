@@ -73,6 +73,12 @@ public class LoginPresenter {
         }
     }
 
+    @Subscribe
+    public void onEvent(UnsuccessfulLoginEvent event) {
+
+        view.showLoginFailiureMessage(event.failiureMessage)
+        bus.unregister(this)
+    }
 
 }
 

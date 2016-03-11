@@ -49,8 +49,6 @@ public class LoginService {
                 event = new SuccessfulLoginEvent(user)
                 bus.post(event)
 
-
-
             }
 
             @Override

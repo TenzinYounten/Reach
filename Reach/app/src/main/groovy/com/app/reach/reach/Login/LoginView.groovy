@@ -16,4 +16,6 @@ public interface LoginView {
     void startMainActivity();
 
     void showLoginError(int loginfailed);
+
+    void showLoginFailiureMessage(String s)
 }
