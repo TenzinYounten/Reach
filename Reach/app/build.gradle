@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'groovyx.grooid.groovy-android'
 
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -24,29 +25,32 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    testCompile 'junit:junit:3.8.1'
     compile 'org.codehaus.groovy:groovy:2.4.5:grooid'
-
-    compile 'com.google.code.gson:gson:2.6.1'
-    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
-    compile 'com.squareup.okhttp3:okhttp:3.1.2'
 
     //testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
     testCompile 'cglib:cglib-nodep:2.2'
     testCompile 'org.objenesis:objenesis:2.2'
     testCompile 'org.robospock:robospock:1.0.0'
 
+    androidTestCompile 'com.android.support.test:rules:0.4.1'
+    androidTestCompile 'com.android.support:support-annotations:23.2.0'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.4.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
+    androidTestCompile('com.android.support.test.espresso:espresso-intents:2.2') {
+        // Necessary to avoid version conflicts
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+
+    compile 'com.android.support:appcompat-v7:23.2.0'
+    compile 'com.android.support:design:23.2.0'
+    compile 'com.google.code.gson:gson:2.6.1'
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    compile 'com.squareup.okhttp3:okhttp:3.1.2'
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
-
     compile 'org.greenrobot:eventbus:3.0.0'
-
-    androidTestCompile 'com.android.support.test:rules:0.4.1'
-
-    androidTestCompile 'com.android.support:support-annotations:23.1.1'
-    androidTestCompile 'com.android.support.test:runner:0.4.1'
-    androidTestCompile 'com.android.support.test:rules:0.4.1'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
-    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.1'
+    compile 'com.android.support:design:23.2.0'
 }

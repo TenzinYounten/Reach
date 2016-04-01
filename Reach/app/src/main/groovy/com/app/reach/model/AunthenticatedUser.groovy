@@ -3,7 +3,7 @@ package com.app.reach.model;
 /**
  * Created by noel on 4/3/16.
  */
-public class User {
+public class AunthenticatedUser {
 
         private String username;
         private def roles;

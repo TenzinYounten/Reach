@@ -1,9 +1,7 @@
 package com.app.reach.reach
-import com.app.reach.model.User
-import com.app.reach.reach.Login.SuccessfulLoginEvent
-import com.app.reach.reach.Login.LoginPresenter
-import com.app.reach.reach.Login.LoginService
-import com.app.reach.reach.Login.LoginView
+import com.app.reach.ReachEndPoint.ReachEndpointInterface
+import com.app.reach.model.AunthenticatedUser
+import com.app.reach.reach.Login.*
 import org.greenrobot.eventbus.EventBus
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -17,11 +15,15 @@ public class LoginPresenterTest extends Specification {
 
     private LoginView view = Mock(LoginView);
     private LoginService service = Mock(LoginService)
-
-    private User user = Mock(User)
-    private SuccessfulLoginEvent event = Mock(SuccessfulLoginEvent)
     private LoginPresenter presenter = new LoginPresenter(view, service);
+
+    private AunthenticatedUser user = Mock(AunthenticatedUser)
+    private SuccessfulLoginEvent successfulLoginEvent = Mock(SuccessfulLoginEvent)
+    private UnsuccessfulLoginEvent unsuccessfulLoginEvent = Mock(UnsuccessfulLoginEvent)
     private EventBus bus = Mock(EventBus)
+
+    private ReachEndpointInterface reachEndpointInterface = Mock(ReachEndpointInterface)
+
     //private loginActivity = Mock(LoginActivity)
 
     //def usernameView = loginActivity.findViewById(R.id.username);
@@ -45,6 +47,7 @@ public class LoginPresenterTest extends Specification {
 
         then:
         result == extectedResult
+
         and:
         1 * view.showUsernameError(R.string.invalid_username)
 
@@ -63,12 +66,12 @@ public class LoginPresenterTest extends Specification {
         def result = presenter.validateUsername(view.getUsername())
 
         then:
-        result == extectedResult
+        result == expectedResult
         and:
         0 * view.showUsernameError(R.string.invalid_username)
 
         where:
-        username   | extectedResult
+        username   | expectedResult
         "someuser" | true
     }
 
@@ -101,6 +104,7 @@ public class LoginPresenterTest extends Specification {
 
         then:
         result == extectedResult
+
         and:
         0 * view.showPasswordError(R.string.invalid_password)
 
@@ -110,9 +114,49 @@ public class LoginPresenterTest extends Specification {
     }
 
     @Unroll
-    def "If login is called no error message should be displayed"() {
+    def "should call login service when login is called"() {
         given:
-        service.login(_, _)  >> true
+        view.getUsername() >> username
+        view.getPassword() >> password
+        LoginData data = new LoginData(username, password)
+
+        when:
+        presenter.login(username, password)
+
+        then:
+        //1 * reachEndpointInterface.doLogin(data)
+        1 * service.login(username, password)
+
+        where:
+        username    |   password
+        "username"  |   "password"
+
+
+    }
+
+    @Unroll
+    def "should call ReachEndpointInterface api when login is called"() {
+        given:
+        view.getUsername() >> username
+        view.getPassword() >> password
+        LoginData data = new LoginData(username, password)
+
+        when:
+        service.login(username, password)
+
+        then:
+        1 * reachEndpointInterface.doLogin(LoginData(username, password))
+
+
+        where:
+        username    |   password
+        "username"  |   "password"
+
+
+    }
+
+    @Unroll
+    def "If login service is called no error message should be displayed"() {
 
         when:
         def result = presenter.login(username, password)
@@ -124,121 +168,56 @@ public class LoginPresenterTest extends Specification {
         result == expectedResult
 
         where:
-        username | password | expectedResult
-        "abc"     |"abx "   | true
-
+        username   | password   | expectedResult
+        "username" | "password" | true
 
     }
 
- /*   @Unroll
-    def "On invalid login error message should be displayed"() {
+   /* @Unroll
+    def "On successful login" () {
+        given:
 
+
+            user.username = "admin"
+            user.accessToken = "accesstoken"
+            user.expiresIn = 3600
+            user.refreshToken = "refreshtoken"
+            user.roles = "admin"
+            user.tokenType = "token"
+            successfulLoginEvent(user)
+
+       when:
+            bus.post(successfulLoginEvent)
+
+       then:
+            1* view.startMainActivity()
+
+    }
+
+    @Unroll
+    def "On unsuccessful login due to wrong credentials"() {
         given:
 
         user = null
 
-
+        successfulLoginEvent(user)
 
         when:
-        event = new SuccessfulLoginEvent(user)
-
-        bus.getDefault()
-        bus.post(event)
+        bus.post(successfulLoginEvent)
 
         then:
         1* view.showLoginError(R.string.invalid_login)
 
-    }*/
+    }
+
+    @Unroll
+    def "On unsuccessful login due to network failiure"() {
+
+      *//*  service.login("username", "password")
+        Call<AunthenticatedUser> call = reachEndpointInterface.doLogin(loginData)
+        call.enqueue() << *//*
 
 
-
-    /* @Unroll
-     def "should enable login button"() {
-         given:
-         passwordView = passwd
-         usernameView = username
-
-         when:
-         presenter.onLoginClicked()
-
-         then:
-         loginActivity.showUsernameError(R.string.invalid_username)
-         loginActivity.showPasswordError(R.string.invalid_password)
-
-         where:
-         passwd   | username
-         null     | "Alina"
-         "Oksana" | "Pavel"
-         "Maciej" | ""
-         null     | ""
-     }*/
-
-    /*def "shouldShowErrorMessageWhenPasswordIsEmpty"() {
-        given:
-            view.getUsername()
-        when:
-            presenter.onLoginClicked()
-        then:
-            view.showUsernameError(R.string.invalid_username)
-        where:
-            username | password
-             ""     | ""
-             ""   | "nkadj"
 
     }*/
-
-
 }
-
-/**
- * Created by tenzin on 2/3/16.
- */
-//@RunWith(MockitoJUnitRunner.class)
-//public class LoginPresenterTest {
-//    @Mock
-//    private LoginView view;
-//    @Mock
-//    private LoginService service;
-//    private LoginPresenter presenter;
-//
-//    @Before
-//    public void setUp() throws Exception {
-//        presenter = new LoginPresenter(view, service);
-//
-//    }
-//
-//    @Test
-//    public void shouldshowerrormessageWhenUserNameIsEmpty() throws Exception {
-//        when(view.getUsername()).thenReturn("");
-//        presenter.onLoginClicked();
-//        verify(view).showUsernameError(R.string.invalid_username);
-//
-//    }
-//
-//    @Test
-//    public void shouldshowerrormessageWhenPasswordIsEmpty() throws Exception {
-//        when(view.getUsername()).thenReturn("james");
-//        when(view.getPassword()).thenReturn("");
-//        presenter.onLoginClicked();
-//        verify(view).showPasswordError(R.string.invalid_password);
-//
-//    }
-//
-//    @Test
-//    public void startWhenUsernameAndPasswordAreCorrect() throws Exception {
-//        when(view.getUsername()).thenReturn("james");
-//        when(view.getPassword()).thenReturn("bond");
-//        when(service.login("james", "bond")).thenReturn(true);
-//        presenter.onLoginClicked();
-//        verify(view).startMainActivity();
-//    }
-//
-//    @Test
-//    public void shouldshowloginerroronwrongusernamepassword() throws Exception {
-//        when(view.getUsername()).thenReturn("james");
-//        when(view.getPassword()).thenReturn("bond");
-//        when(service.login("james", "bond")).thenReturn(false);
-//        presenter.onLoginClicked();
-//        verify(view).showLoginError(R.string.invalid_login);
-//    }
-//}

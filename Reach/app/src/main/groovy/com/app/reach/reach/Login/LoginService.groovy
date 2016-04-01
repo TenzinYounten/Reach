@@ -1,19 +1,20 @@
 package com.app.reach.reach.Login
+
 import android.util.Log
-import com.app.reach.model.User
+import com.app.reach.ReachEndPoint.ReachEndpointInterface
+import com.app.reach.model.AunthenticatedUser
 import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 /**
  * Created by tenzin on 3/3/16.
  */
 public class LoginService {
-
     private EventBus bus = EventBus.getDefault();
-
 
     public boolean login(String username, String password) {
 
@@ -24,15 +25,17 @@ public class LoginService {
 
         ReachEndpointInterface reachEndpointInterface = retrofit.create(ReachEndpointInterface.class)
         LoginData loginData = new LoginData(username, password)
-        Call<User> call = reachEndpointInterface.doLogin(loginData)
+
+        Call<AunthenticatedUser> call = reachEndpointInterface.doLogin(loginData)
+        Log.d("call", "" + call)
         Log.d("Check1", "nothing1")
 
-        call.enqueue(new Callback<User>() {
+        call.enqueue(new Callback<AunthenticatedUser>() {
             @Override
-            void onResponse(Call<User> callAsync, Response<User> response) {
+            void onResponse(Call<AunthenticatedUser> callAsync, Response<AunthenticatedUser> response) {
                 SuccessfulLoginEvent event = null
-                User user = response.body()
-                if(response.isSuccess()) {
+                AunthenticatedUser user = response.body()
+                if (response.isSuccess()) {
                     Log.d("Body", "" + user)
                     if (user != null) {
                         Log.d("Response (contains request infos):", " ");
@@ -48,16 +51,14 @@ public class LoginService {
                 }
                 event = new SuccessfulLoginEvent(user)
                 bus.post(event)
-
             }
 
             @Override
-            void onFailure(Call<User> callAsync, Throwable t) {
+            void onFailure(Call<AunthenticatedUser> callAsync, Throwable t) {
                 Log.d("Check2", "nothing2")
                 Log.d("Error :", t.getMessage())
                 UnsuccessfulLoginEvent event = new UnsuccessfulLoginEvent(t.getMessage())
                 bus.post(event)
-
             }
         })
         Log.d("Check3", "nothing3")
