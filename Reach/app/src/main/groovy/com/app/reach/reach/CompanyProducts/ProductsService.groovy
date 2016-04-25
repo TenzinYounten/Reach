@@ -3,7 +3,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import com.app.reach.ReachEndPoint.ReachEndpointInterface
-import com.app.reach.model.Product
+import com.app.reach.model.OrderlineListItem
 import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,21 +30,21 @@ public class ProductsService {
         Log.d("access token", "" + access_token)
 
         ReachEndpointInterface reachEndpointInterface = retrofit.create(ReachEndpointInterface.class)
-        Call<List<Product>> call = reachEndpointInterface.getProducts(access_token, id)
-        call.enqueue(new Callback<List<Product>>() {
+        Call<List<OrderlineListItem>> call = reachEndpointInterface.getProducts(access_token, id)
+        call.enqueue(new Callback< ArrayList<OrderlineListItem>>() {
             @Override
-            void onResponse(Call<List<Product>> productCall, Response<List<Product>> response) {
+            void onResponse(Call<ArrayList<OrderlineListItem>> productCall, Response<ArrayList<OrderlineListItem>> response) {
                 if(response.isSuccess()){
                     Log.d("IsSucess","")
                 }
                 SuccessfulGetProductsEvent event
-                List<Product> productList = response.body()
+                ArrayList<OrderlineListItem> productList = response.body()
                 event = new SuccessfulGetProductsEvent(productList)
                 bus.post(event)
             }
 
             @Override
-            void onFailure(Call<List<Product>> productCall, Throwable t) {
+            void onFailure(Call<ArrayList<OrderlineListItem>> productCall, Throwable t) {
                 Log.d("failiure", "" + t.getMessage())
                 UnSuccessfulGetProductsEvent event = new UnSuccessfulGetProductsEvent(t.getMessage())
                 bus.post(event)

@@ -1,25 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:descendantFocusability="beforeDescendants">
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textViewProductName" />
+        android:layout_height="match_parent"
+        card_view:contentPadding="15dp"
+        card_view:cardElevation="2dp"
+        card_view:cardCornerRadius="5dp"
+    >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textViewProductMrp" />
+       <!-- <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">-->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="3">
+            <TableRow
+                android:layout_height="match_parent"
+                android:layout_width="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textViewProductDescription" />
+            <TextView
+                style="@style/Base.TextAppearance.AppCompat.Headline"
+                android:layout_weight="1"
+                android:text="New Text"
+                android:id="@+id/textViewProductName"/>
 
+            <TextView
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:textColor="@color/textbody"
+                android:layout_weight="1"
+                android:text="Content here"
+                android:id="@+id/textViewProductMrp"/>
 
-</LinearLayout>
+               <!-- <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >-->
+                <EditText
+                    android:id="@+id/Quantity"
+                    android:layout_weight="1"
+                    android:inputType="number"
+
+                     />
+                <!-- </LinearLayout>-->
+       <!-- </LinearLayout>-->
+            </TableRow>
+        </TableLayout>
+    </android.support.v7.widget.CardView>
+</FrameLayout>

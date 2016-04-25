@@ -2,6 +2,7 @@ package com.app.reach.reach.Company
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.view.MenuItem
 import com.app.reach.reach.R
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -56,5 +57,33 @@ public class CompanyPresenter {
 
     void onItemClick(Intent intent) {
         view.startProductActivity(intent)
+    }
+    public void onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_home) {
+            // Handle the camera action
+        } else if (id == R.id.nav_companies) {
+
+        } else if (id == R.id.nav_category) {
+
+        } else if (id == R.id.nav_aboutus) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+
+    }
+
+    public onOptionItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
     }
 }

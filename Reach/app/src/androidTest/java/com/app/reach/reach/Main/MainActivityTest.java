@@ -57,9 +57,9 @@ public class MainActivityTest {
         SuccessfulLoginEvent event;
         event = new SuccessfulLoginEvent(user);
 
-        if (event == null) {
+     /*   if (event == null) {
             onView(withId(R.id.goToLogin)).check(matches((isDisplayed())));
-        }
+        }*/
     }
 
     @Test

@@ -35,5 +35,9 @@ public class ActivityUtil {
     public void startProductDetailsActivity(Intent intent) {
         context.startActivity(intent)
     }
+
+    public void startOrderLineListItemsActivity(Intent intent) {
+        context.startActivity(intent)
+    }
 }
 

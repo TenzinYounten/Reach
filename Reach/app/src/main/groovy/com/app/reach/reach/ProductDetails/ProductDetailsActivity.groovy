@@ -2,9 +2,11 @@ package com.app.reach.reach.ProductDetails
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.Html
+import android.widget.EditText
 import android.widget.ListView
 import android.widget.TextView
-import com.app.reach.model.Product
+import com.app.reach.model.OrderlineListItem
 import com.app.reach.reach.R
 
 import java.text.DecimalFormat
@@ -14,6 +16,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements Product
     ProductDetailsPresenter detailsPresenter
     ProductDetailsService detailsService
     ListView listView
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,22 +33,21 @@ public class ProductDetailsActivity extends AppCompatActivity implements Product
 
     @Override
     def listProduct(SuccessfulGetProductDetailEvent event) {
-        Product product= event.product
+        int quantity = getIntent().getIntExtra("productQuantity", 0)
+        OrderlineListItem product= event.product
 
         TextView textviewProductName = (TextView) findViewById(R.id.product_Name);
         TextView textViewProductMrpPrice = (TextView) findViewById(R.id.product_MrpPrice);
         TextView textviewProductDescription = (TextView) findViewById(R.id.product_description);
-        TextView textviewSellingPriceWithoutTax = (TextView) findViewById(R.id.product_sellingPriceWithoutTax);
-        TextView textviewSellingPriceWithTax = (TextView) findViewById(R.id.product_sellingPriceWithTax);
+        EditText product_Quantity = (EditText) findViewById(R.id.editText_quantity)
+
 
         // Populate the data into the template view using the data object
 
-        textviewProductName.setText( product.getName());
-        textViewProductMrpPrice.setText(""+(new DecimalFormat("##.##").format(product.getMrpPrice())))
-        textviewProductDescription.setText(product.getProductDescription());
-        textviewSellingPriceWithoutTax.setText(""+(new DecimalFormat("##.##").format(product.getSellingPriceWithoutTax())));
-        textviewSellingPriceWithTax.setText(""+(new DecimalFormat("##.##").format(product.getSellingPriceWithTax())));
-
+        textviewProductName.setText(Html.fromHtml("<b>"+"OrderlineListItem Name : "+"</b>"+product.getName()));
+        textViewProductMrpPrice.setText(Html.fromHtml("<b>"+"OrderlineListItem Mrp Price : "+"</b>"+(new DecimalFormat("##.##").format(product.getMrpPrice()))))
+        textviewProductDescription.setText(Html.fromHtml("<b>"+"OrderlineListItem Description : "+"</b>"+product.getProductDescription()));
+        product_Quantity.setText(""+product_Quantity)
     }
 
     @Override

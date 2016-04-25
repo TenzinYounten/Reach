@@ -13,4 +13,8 @@ public interface ProductsView {
     def showNetworkFailiureMessage(String p);
 
     void startProductActivity(Intent p);
+
+    void viewOrderItems()
+
+    void startOrderLineListActivity(Intent intent)
 }

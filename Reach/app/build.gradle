@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'groovyx.grooid.groovy-android'
+apply plugin: 'realm-android'
 
 
 android {
@@ -28,6 +29,8 @@ dependencies {
     testCompile 'junit:junit:3.8.1'
     compile 'org.codehaus.groovy:groovy:2.4.5:grooid'
 
+    compile 'com.android.support:cardview-v7:23.0.+'
+
     //testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
     testCompile 'cglib:cglib-nodep:2.2'
     testCompile 'org.objenesis:objenesis:2.2'
@@ -53,4 +56,8 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.android.support:design:23.2.0'
+
+    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'junit:junit:4.12'
+    compile 'com.android.support.test:runner:0.5'
 }

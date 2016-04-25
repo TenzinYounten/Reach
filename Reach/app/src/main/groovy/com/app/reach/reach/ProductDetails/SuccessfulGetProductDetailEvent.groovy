@@ -1,22 +1,22 @@
 package com.app.reach.reach.ProductDetails
 
-import com.app.reach.model.Product;
+import com.app.reach.model.OrderlineListItem;
 
 /**
  * Created by tenzin on 28/3/16.
  */
 public class SuccessfulGetProductDetailEvent {
-    Product product
+    OrderlineListItem product
 
-    Product getProduct() {
+    OrderlineListItem getProduct() {
         return product
     }
 
-    void setProduct(Product product) {
+    void setProduct(OrderlineListItem product) {
         this.product = product
     }
 
-    SuccessfulGetProductDetailEvent(Product product) {
+    SuccessfulGetProductDetailEvent(OrderlineListItem product) {
         this.product = product
     }
 }

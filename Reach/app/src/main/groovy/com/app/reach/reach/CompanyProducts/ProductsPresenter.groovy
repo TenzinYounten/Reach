@@ -3,6 +3,7 @@ package com.app.reach.reach.CompanyProducts
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.view.MenuItem
 import com.app.reach.reach.Company.UnSuccessfulGetCompanyEvent
 import com.app.reach.reach.R
 import org.greenrobot.eventbus.EventBus
@@ -23,7 +24,7 @@ public class ProductsPresenter {
 
     public void onCreate(Context context, Long id) {
         bus.register(this)
-        if(getProducts(context,id)) {
+        if (getProducts(context, id)) {
             return
         }
     }
@@ -32,14 +33,17 @@ public class ProductsPresenter {
         service.getProducts(context, id)
     }
 
+    public void viewOrderItems() {
+        view.viewOrderItems()
+    }
+
     @Subscribe
-    public void onEvent(SuccessfulGetProductsEvent event){
-        Log.d("onEvent log", "onEvent before response"+event.productList.productCode.dump() )
-        if(event.getProductList()!= null) {
+    public void onEvent(SuccessfulGetProductsEvent event) {
+        Log.d("onEvent log", "onEvent before response" + event.productList.productCode.dump())
+        if (event.getProductList() != null) {
             view.listProducts(event)
             Log.d("getproduct", "passed")
-        }
-        else {
+        } else {
             Log.d("getproduct", "fail")
             bus.unregister(this)
             view.showNoProductsRegisteredError(R.string.invalid_login);
@@ -54,5 +58,38 @@ public class ProductsPresenter {
 
     void onItemClick(Intent intent) {
         view.startProductActivity(intent)
+    }
+
+    public void onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_home) {
+            // Handle the camera action
+        } else if (id == R.id.nav_companies) {
+
+        } else if (id == R.id.nav_category) {
+
+        } else if (id == R.id.nav_aboutus) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+
+    }
+
+    public onOptionItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+    }
+
+    void onProceedClick(Intent intent) {
+        view.startOrderLineListActivity(intent)
     }
 }

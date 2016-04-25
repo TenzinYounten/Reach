@@ -1,7 +1,7 @@
 package com.app.reach.ReachEndPoint
 import com.app.reach.model.AunthenticatedUser
 import com.app.reach.model.Company
-import com.app.reach.model.Product
+import com.app.reach.model.OrderlineListItem
 import com.app.reach.reach.Login.LoginData
 import retrofit2.Call
 import retrofit2.http.*
@@ -20,8 +20,8 @@ public interface ReachEndpointInterface {
     Call<List<Company>> getCompanies(@Header("Authorization")String access_token )
 
     @GET("api/company/{companyId}/product")
-    Call<List<Product>> getProducts(@Header("Authorization")String access_token, @Path("companyId")Long id )
+    Call<List<OrderlineListItem>> getProducts(@Header("Authorization")String access_token, @Path("companyId")Long id )
 
     @GET("api/company/{companyId}/product/{productId}")
-    Call<Product> getProduct(@Header("Authorization")String access_token, @Path("companyId")Long companyId, @Path("productId") Long productId )
+    Call<OrderlineListItem> getProduct(@Header("Authorization")String access_token, @Path("companyId")Long companyId, @Path("productId") Long productId )
 }

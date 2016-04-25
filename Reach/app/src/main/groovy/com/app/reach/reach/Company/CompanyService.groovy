@@ -43,16 +43,15 @@ public class CompanyService {
                 if(response.isSuccess())
                 {
                     Log.d("in Response Sucess","pass")
-                    Log.d("Company list",""+companyList.dump())
+                    Log.d("Company list",""+response.body().dump())
 
 
-                    Log.d("company name",""+companyList.companyName)
+                    Log.d("company name",""+response.body().companyName)
 
                     Log.d("contents", "present")
 
                 }
                 event = new SuccessfulGetCompanyEvent(companyList)
-                Log.d("companyList",""+companyList.dump())
                 Log.d("event"," "+event.dump())
                 bus.post(event)
             }
