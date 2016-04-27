@@ -1,21 +1,22 @@
 package com.app.reach.reach.CompanyProducts
 
-import com.app.reach.model.OrderlineListItem
+import com.app.reach.model.ProductListDB.ProductDB
+import io.realm.RealmList
 /**
  * Created by tenzin on 24/3/16.
  */
 public class SuccessfulGetProductsEvent {
-   List<OrderlineListItem> productList
+   RealmList<ProductDB> productList
 
-   SuccessfulGetProductsEvent(List<OrderlineListItem> productList) {
+   SuccessfulGetProductsEvent(List<ProductDB> productList) {
       this.productList = productList
    }
 
-   List<OrderlineListItem> getProductList() {
+   List<ProductDB> getProductList() {
       return productList
    }
 
-   void setProductList(List<OrderlineListItem> productList) {
+   void setProductList(List<ProductDB> productList) {
       this.productList = productList
    }
 }

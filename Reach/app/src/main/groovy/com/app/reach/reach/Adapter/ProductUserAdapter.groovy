@@ -64,13 +64,14 @@ public class ProductUserAdapter extends ArrayAdapter<List<OrderlineListItem>> {
 
             @Override
             void afterTextChanged(Editable s) {
-                if (s != null) {
+                if (s != "") {
                     /* realm.beginTransaction()
                      PurchasedOrderDB item = realm.createObject(PurchasedOrderDB.class)*/
                     product.quantity = s.toInteger()
 
                 } else {
-                    product.quantity = 0
+                    holder.productQuantity.setText(""+0)
+
                 }
                 Log.d("product name", "" + product.name)
                 Log.d("product quantity", "" + product.quantity)
@@ -98,7 +99,7 @@ public class ProductUserAdapter extends ArrayAdapter<List<OrderlineListItem>> {
 
         textviewProductMrp.setText("" + (new DecimalFormat("##.##").format(product.getMrpPrice())));
         textViewProductName.setText(product.getName());
-        textviewQuantity.setHint(""+0)
+        textviewQuantity.setText(""+0)
 
         // Return the completed view to render on screen
         return convertView;

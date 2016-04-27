@@ -1,7 +1,7 @@
 package com.app.reach.reach.OrderLineListItem
 import android.content.Context
 import android.view.MenuItem
-import com.app.reach.model.Order.OrderLine
+import com.app.reach.model.OrderDB.OrderLine
 import com.app.reach.model.OrderlineListItem
 import com.app.reach.reach.R
 /**

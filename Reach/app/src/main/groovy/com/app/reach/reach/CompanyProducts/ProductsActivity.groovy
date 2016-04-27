@@ -20,19 +20,21 @@ import android.widget.ListView
 import android.widget.Toast
 import com.app.reach.model.OrderLineList
 import com.app.reach.model.OrderlineListItem
+import com.app.reach.model.ProductListDB.ProductDB
 import com.app.reach.reach.ActivityUtility.ActivityUtil
 import com.app.reach.reach.Adapter.ProductUserAdapter
 import com.app.reach.reach.OrderLineListItem.OrderLineListItemActivity
 import com.app.reach.reach.ProductDetails.ProductDetailsActivity
 import com.app.reach.reach.R
+import io.realm.RealmList
 
 public class ProductsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ProductsView {
     ProductsPresenter presenter
     ProductsView view
     ListView listView
     FloatingActionButton fab
-    ArrayList<OrderlineListItem> lineItems
-
+    /*ArrayList<OrderlineListItem> lineItems*/
+    RealmList<ProductDB>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

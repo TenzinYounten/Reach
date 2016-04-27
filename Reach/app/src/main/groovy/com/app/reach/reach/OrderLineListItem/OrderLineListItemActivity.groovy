@@ -13,7 +13,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ListView
-import com.app.reach.model.Order.OrderLine
+import com.app.reach.model.OrderDB.OrderLine
 import com.app.reach.model.OrderlineListItem
 import com.app.reach.reach.Adapter.OrderLineUserAdapter
 import com.app.reach.reach.R

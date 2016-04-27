@@ -18,12 +18,13 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.Toast
-import com.app.reach.model.Company
+import com.app.reach.model.CompanyDB.CompanyDB
 import com.app.reach.reach.ActivityUtility.ActivityUtil
 import com.app.reach.reach.Adapter.CompanyUserAdapter
 import com.app.reach.reach.CompanyProducts.ProductsActivity
 import com.app.reach.reach.Login.SuccessfulLoginEvent
 import com.app.reach.reach.R
+import io.realm.RealmList
 import org.greenrobot.eventbus.EventBus
 
 public class CompanyActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,CompanyView {
@@ -115,9 +116,10 @@ public class CompanyActivity extends AppCompatActivity implements NavigationView
     def listCompanies(SuccessfulGetCompanyEvent event) {
 
         listView = findViewById(R.id.listViewCompanies)
-        List<Company> company = event.companyList
+        /*List<Company> company = event.companyList*/
+        RealmList<CompanyDB> companyDB = event.companyList
 
-        CompanyUserAdapter adapter = new CompanyUserAdapter(this, company)
+        CompanyUserAdapter adapter = new CompanyUserAdapter(this, companyDB)
 
         listView.setAdapter(adapter)
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -126,7 +128,7 @@ public class CompanyActivity extends AppCompatActivity implements NavigationView
             public void onItemClick(AdapterView<?> parent, View view,
                                     final int position, long id) {
 
-                Company companyList = (Company) listView.getItemAtPosition(position)
+                CompanyDB companyList = (CompanyDB) listView.getItemAtPosition(position)
                 Log.d("Selected comapny company",""+companyList)
                 Long companyId = (Long) companyList.id
                 Log.d("companyId",""+companyId)

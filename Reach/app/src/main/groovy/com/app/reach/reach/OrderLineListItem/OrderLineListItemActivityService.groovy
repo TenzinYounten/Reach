@@ -1,8 +1,8 @@
 package com.app.reach.reach.OrderLineListItem
 import android.content.Context
 import android.util.Log
-import com.app.reach.model.Order.OrderLine
-import com.app.reach.model.Order.PurchasedOrderLineDB
+import com.app.reach.model.OrderDB.OrderLine
+import com.app.reach.model.OrderDB.PurchasedOrderLineDB
 import com.app.reach.model.OrderlineListItem
 import io.realm.Realm
 import io.realm.RealmList

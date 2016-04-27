@@ -1,22 +1,22 @@
 package com.app.reach.reach.Company
 
-import com.app.reach.model.Company
-
+import com.app.reach.model.CompanyDB.CompanyDB
+import io.realm.RealmList
 /**
  * Created by tenzin on 17/3/16.
  */
 public class SuccessfulGetCompanyEvent {
-   List<Company> companyList
+   RealmList<CompanyDB> companyList
 
-    SuccessfulGetCompanyEvent(List<Company> companyList) {
+    SuccessfulGetCompanyEvent(RealmList<CompanyDB> companyList) {
         this.companyList = companyList
     }
 
-    List<Company> getCompanyList() {
+    RealmList<CompanyDB> getCompanyList() {
         return companyList
     }
 
-    void setCompanyList(List<Company> companyList) {
+    void setCompanyList(RealmList<CompanyDB> companyList) {
         this.companyList = companyList
     }
  /*   Object response

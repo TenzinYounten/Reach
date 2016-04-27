@@ -17,10 +17,10 @@ public interface ReachEndpointInterface {
 
 
     @GET("api/company")
-    Call<List<Company>> getCompanies(@Header("Authorization")String access_token )
+    Call<List<Company>> getCompanies(@Header("Authorization")String access_token, @Header("If-Modified-Since") time)
 
     @GET("api/company/{companyId}/product")
-    Call<List<OrderlineListItem>> getProducts(@Header("Authorization")String access_token, @Path("companyId")Long id )
+    Call<List<OrderlineListItem>> getProducts(@Header("Authorization")String access_token, @Header("If-Modified-Since") time, @Path("companyId")Long id )
 
     @GET("api/company/{companyId}/product/{productId}")
     Call<OrderlineListItem> getProduct(@Header("Authorization")String access_token, @Path("companyId")Long companyId, @Path("productId") Long productId )

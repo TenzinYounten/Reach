@@ -1,4 +1,4 @@
-package com.app.reach.model.Order;
+package com.app.reach.model.OrderDB;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
