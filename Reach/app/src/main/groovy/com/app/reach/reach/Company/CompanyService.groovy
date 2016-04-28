@@ -72,7 +72,8 @@ public class CompanyService {
 
                     }
                     event = new SuccessfulGetCompanyEvent(companyListDB.getCompanyListDB())
-                    Log.d("event", " " + event.dump())
+                    Log.d("eventCompany", " " + event.dump())
+
                     bus.post(event)
                 }
 

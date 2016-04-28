@@ -27,13 +27,9 @@ import com.app.reach.reach.R
             }
             // Lookup view for data population
             TextView textViewCompanyName = (TextView) convertView.findViewById(R.id.textViewCompanyName);
-
             // Populate the data into the template view using the data object
-
             textViewCompanyName.setText(company.getCompanyName());
-
             // Return the completed view to render on screen
-
             return convertView;
 
         }

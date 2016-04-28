@@ -4,8 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.MenuItem
+import com.app.reach.model.OrderlineListItem
+import com.app.reach.model.ProductListDB.ProductDB
 import com.app.reach.reach.Company.UnSuccessfulGetCompanyEvent
 import com.app.reach.reach.R
+import io.realm.RealmList
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 /**
@@ -91,5 +94,11 @@ public class ProductsPresenter {
 
     void onProceedClick(Intent intent) {
         view.startOrderLineListActivity(intent)
+    }
+
+    List<OrderlineListItem> convertEventToOrderLine(RealmList<ProductDB> productDBs) {
+        Log.d("Productdbs presenter",""+productDBs.name)
+        List<OrderlineListItem> orderlineListItems = service.convertEventToOrderLine(productDBs)
+        return orderlineListItems
     }
 }

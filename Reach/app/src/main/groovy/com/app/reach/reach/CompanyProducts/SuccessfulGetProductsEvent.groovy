@@ -8,15 +8,15 @@ import io.realm.RealmList
 public class SuccessfulGetProductsEvent {
    RealmList<ProductDB> productList
 
-   SuccessfulGetProductsEvent(List<ProductDB> productList) {
+   SuccessfulGetProductsEvent(RealmList<ProductDB> productList) {
       this.productList = productList
    }
 
-   List<ProductDB> getProductList() {
+   RealmList<ProductDB> getProductList() {
       return productList
    }
 
-   void setProductList(List<ProductDB> productList) {
+   void setProductList(RealmList<ProductDB> productList) {
       this.productList = productList
    }
 }

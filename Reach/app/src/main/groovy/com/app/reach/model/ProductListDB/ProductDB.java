@@ -16,7 +16,15 @@ public class ProductDB extends RealmObject {
     Double mrpPrice;
     Double sellingPriceWithoutTax;
     Double sellingPriceWithTax;
+    Integer quantity;
 
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 
     public Long getId() {
         return id;

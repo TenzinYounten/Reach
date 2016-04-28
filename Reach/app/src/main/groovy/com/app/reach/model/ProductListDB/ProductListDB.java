@@ -10,7 +10,7 @@ import io.realm.annotations.RealmClass;
 @RealmClass
 public class ProductListDB extends RealmObject {
     String date;
-    RealmList<ProductDB> listDB;
+    RealmList<ProductDB> productListDB;
 
     public String getDate() {
         return date;
@@ -20,11 +20,11 @@ public class ProductListDB extends RealmObject {
         this.date = date;
     }
 
-    public RealmList<ProductDB> getListDBs() {
-        return listDB;
+    public RealmList<ProductDB> getProductListDB() {
+        return productListDB;
     }
 
-    public void setListDBs(RealmList<ProductDB> listDBs) {
-        this.listDB = listDB;
+    public void setProductListDB(RealmList<ProductDB> productListDB) {
+        this.productListDB = productListDB;
     }
 }

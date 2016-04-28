@@ -16,6 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 /**
  * Created by tenzin on 24/3/16.
  */
@@ -38,37 +39,47 @@ public class ProductsService {
 
         ReachEndpointInterface reachEndpointInterface = retrofit.create(ReachEndpointInterface.class)
         Call<List<OrderlineListItem>> call = reachEndpointInterface.getProducts(access_token, time, id)
-        call.enqueue(new Callback< ArrayList<OrderlineListItem>>() {
+        call.enqueue(new Callback<ArrayList<OrderlineListItem>>() {
             @Override
             void onResponse(Call<ArrayList<OrderlineListItem>> productCall, Response<ArrayList<OrderlineListItem>> response) {
-                RealmList<ProductDB> productListDB = new RealmList<ProductDB>()
+                SuccessfulGetProductsEvent event
+                RealmList<ProductDB> productList = new RealmList<ProductDB>()
                 realm = Realm.getDefaultInstance()
-                ProductListDB productList = realm.createObject(ProductListDB.class)
+
                 realm.beginTransaction()
-                if(response.isSuccess()){
-                    Log.d("IsSucess","")
+                ProductListDB productListDB = realm.createObject(ProductListDB.class)
+                if (response.isSuccess()) {
+                    Log.d("IsSucess", "")
+                    Log.d("Response Boody", "" + response.body().name)
 
                     response.body().each {
                         ProductDB productDB = realm.createObject(ProductDB.class)
                         productDB.id = it.id
-                        productDB.productCode = it.id
+                        productDB.productCode = it.productCode
                         productDB.name = it.name
                         productDB.companyId = it.companyId
                         productDB.productDescription = it.productDescription
                         productDB.mrpPrice = it.mrpPrice
                         productDB.sellingPriceWithTax = it.sellingPriceWithTax
                         productDB.sellingPriceWithoutTax = it.sellingPriceWithoutTax
-                        productListDB << productDB
+                        productList << productDB
                     }
-                    String lastUpdateTime = DateFormat.format("yyyy-MM-dd kk:mm:ss", new java.util.Date());
-                    Log.d("Date",""+lastUpdateTime)
-                    productList.setListDBs(productListDB)
-                    productList.setDate(lastUpdateTime)
+                    Log.d("productLits", "" + productList.dump())
+                    String lastTimeOfUpdate = DateFormat.format("yyyy-MM-dd kk:mm:ss", new Date());
+                    productListDB.setProductListDB(productList)
+                    productListDB.setDate(lastTimeOfUpdate)
                     realm.commitTransaction()
+
+                    Log.d("productListDb", "" + productListDB.productListDB.name)
+                    /* productListDB.setDate(lastTimeOfUpdate)
+                     Log.d("final Product",""+productListDB.date)*/
+
+
                 }
-                SuccessfulGetProductsEvent event
-                ArrayList<OrderlineListItem> productsList = response.body()
-                event = new SuccessfulGetProductsEvent(productList.getListDBs())
+                ArrayList<OrderlineListItem> productL = response.body()
+                event = new SuccessfulGetProductsEvent(productListDB.getProductListDB())
+                Log.d("service event", "" + event.productList)
+                Log.d("event", " " + event.dump())
                 bus.post(event)
             }
 
@@ -81,4 +92,25 @@ public class ProductsService {
         })
         Log.d("service", "ends")
     }
+
+    List<OrderlineListItem> convertEventToOrderLine(RealmList<ProductDB> productDBs) {
+        List<OrderlineListItem> orderlineListItems = new ArrayList<OrderlineListItem>()
+        productDBs.each {
+            OrderlineListItem item = new OrderlineListItem(
+                    it.productDescription,
+                    it.companyId,
+                    it.name,
+                    it.productCode,
+                    it.id,
+                    it.mrpPrice,
+                    it.sellingPriceWithTax,
+                    it.sellingPriceWithoutTax,
+                    0)
+            Log.d("item",""+item.name)
+            orderlineListItems << item
+            Log.d("orderlinelistitems",""+orderlineListItems.name)
+        }
+        return orderlineListItems
+    }
 }
+

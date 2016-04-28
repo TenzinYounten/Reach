@@ -33,8 +33,8 @@ public class ProductsActivity extends AppCompatActivity implements NavigationVie
     ProductsView view
     ListView listView
     FloatingActionButton fab
-    /*ArrayList<OrderlineListItem> lineItems*/
-    RealmList<ProductDB>
+    ArrayList<OrderlineListItem> lineItems
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,13 +111,15 @@ public class ProductsActivity extends AppCompatActivity implements NavigationVie
         Long companyId = getIntent().getLongExtra("companyId", 0)
         EditText productQuantity = findViewById(R.id.Quantity)
         listView = findViewById(R.id.listViewProduct)
-        Log.d("event.product",""+event.productList)
-        this.lineItems = event.productList
-        Log.d("Lineitems",""+lineItems.dump())
-        List<OrderlineListItem> product = event.productList
-        Log.d("OrderlineListItem", "" + product.productCode)
+        Log.d("event.product",""+event.productList.name)
+/*        List<OrderlineListItem> product = event.productList
+        Log.d("OrderlineListItem", "" + product.productCode)*/
+        this.lineItems = presenter.convertEventToOrderLine(event.productList)
+       /* this.lineItems = event.productList*/
+        RealmList<ProductDB> productDBRealmList = event.productList
+        //OrderLineList lineList = event.productList
 
-        ProductUserAdapter adapter = new ProductUserAdapter(this, R.layout.product_list_item, product)
+        ProductUserAdapter adapter = new ProductUserAdapter(this, R.layout.product_list_item, lineItems)
 
         listView.setAdapter(adapter)
 
