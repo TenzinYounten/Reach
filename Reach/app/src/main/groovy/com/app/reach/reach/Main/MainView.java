@@ -8,4 +8,5 @@ public interface MainView {
     void startCompanyActivity();
 
 
+    void startPurchaseOrderActivity();
 }

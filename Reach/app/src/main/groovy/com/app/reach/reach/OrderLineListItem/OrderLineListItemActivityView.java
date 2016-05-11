@@ -5,4 +5,6 @@ package com.app.reach.reach.OrderLineListItem;
  */
 public interface OrderLineListItemActivityView {
     Object listItems();
+
+    void startCompanyActivity();
 }

@@ -1,5 +1,8 @@
 package com.app.reach.reach.OrderLineListItem
+
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
@@ -14,15 +17,20 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ListView
 import com.app.reach.model.OrderDB.OrderLine
+import com.app.reach.model.OrderDB.PurchasedOrderDb
 import com.app.reach.model.OrderlineListItem
+import com.app.reach.reach.ActivityUtility.ActivityUtil
 import com.app.reach.reach.Adapter.OrderLineUserAdapter
+import com.app.reach.reach.NetworkConnectivity.NetworkChangeReceiver
 import com.app.reach.reach.R
+import io.realm.RealmResults
 
 public class OrderLineListItemActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,OrderLineListItemActivityView{
 
-    OrderLineListItemActivityPresenter activityPresenter;
+    OrderLineListItemPresenter activityPresenter;
     OrderLineListItemActivityView activityView;
     ListView listView
+    NetworkChangeReceiver receiver;
 
 
     @Override
@@ -30,7 +38,7 @@ public class OrderLineListItemActivity extends AppCompatActivity implements Navi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_line_list_item);
 
-        activityPresenter = new OrderLineListItemActivityPresenter(this, new OrderLineListItemActivityService())
+        activityPresenter = new OrderLineListItemPresenter(this, new OrderLineListItemService())
      /*   Bundle b = this.getIntent().getExtras();
         ArrayList<OrderlineListItem> orderlineListItems = activityPresenter.getOrderLineListItem(b)
         activityPresenter.onCreate(orderlineListItems)*/
@@ -52,6 +60,7 @@ public class OrderLineListItemActivity extends AppCompatActivity implements Navi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
        /* fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,6 +77,10 @@ public class OrderLineListItemActivity extends AppCompatActivity implements Navi
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+      /*  IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        receiver = new NetworkChangeReceiver()
+        registerReceiver(receiver, intentFilter)*/
     }
 
     @Override
@@ -84,9 +97,8 @@ public class OrderLineListItemActivity extends AppCompatActivity implements Navi
 
     @Override
     protected void onDestroy() {
-
         super.onDestroy()
-
+        /*unregisterReceiver()*/
     }
 
     @Override
@@ -125,7 +137,7 @@ public class OrderLineListItemActivity extends AppCompatActivity implements Navi
         orderlineListItems = b.getParcelableArrayList("OrderLine")
         orderlineListItems = activityPresenter.getQuantifiedOrders(orderlineListItems)
 
-        double totalSum = activityPresenter.calculateTotal(orderlineListItems.sellingPriceWithTax,orderlineListItems.quantity)
+        double totalSum = activityPresenter.calculateTotal(orderlineListItems.mrpPrice as ArrayList<Double>,orderlineListItems.quantity)
         Log.d("totalSum",""+totalSum)
         Log.d("totalSum",""+totalSum)
         Log.d("class",""+orderlineListItems.dump())
@@ -134,16 +146,32 @@ public class OrderLineListItemActivity extends AppCompatActivity implements Navi
         listView.setAdapter(adapter)
     }
 
-    public void onSubmitOrder ( View view ) {
+    @Override
+    void startCompanyActivity() {
+        new ActivityUtil(this).startCompanyActivity()
+    }
+
+    public void onSubmitOrder (View view ) {
         Context context = this.getApplicationContext()
         Bundle b = this.getIntent().getExtras();
         ArrayList<OrderLine> orderlineListItems = null
         orderlineListItems = b.getParcelableArrayList("OrderLine")
+        orderlineListItems = activityPresenter.getQuantifiedOrderLine(orderlineListItems)
         Log.d("orderline classss",""+orderlineListItems.class)
-        double totalSum = activityPresenter.calculateTotal(orderlineListItems.sellingPriceWithTax,orderlineListItems.quantity)
+        double totalSum = activityPresenter.calculateTotal(orderlineListItems.mrpPrice,orderlineListItems.quantity)
         Log.d("Activity total sum",""+totalSum)
         Log.d("Activity list items",""+orderlineListItems.companyId)
-        activityPresenter.onSubmitOrder(orderlineListItems,context,totalSum)
+        RealmResults<PurchasedOrderDb> dbRealmResults = activityPresenter.onSubmitOrder(orderlineListItems,context,totalSum)
+        //RealmResults<PurchasedOrderDb> purchasedOrderLineDB = activityPresenter.getStoredPurchaseOrderLine()
+        Log.d("ActivityRealmResult",""+dbRealmResults.dump())
+
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        receiver = new NetworkChangeReceiver()
+        registerReceiver(receiver, intentFilter)
+        activityPresenter.startCompanyActivity()
+
+        //activityPresenter.onSubmitGetPurchaseOrderNumber(context,dbRealmResults)
     }
+
 
 }

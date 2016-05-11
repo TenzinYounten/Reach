@@ -1,12 +1,15 @@
 package com.app.reach.reach.Main
+
 import android.view.MenuItem
 import com.app.reach.reach.R
+import io.realm.Realm
 /**
  * Created by tenzin on 17/3/16.
  */
 public class MainPresenter {
     private MainView view;
     private MainService service
+    Realm realm
 
     MainPresenter(MainView view, MainService service) {
         this.view = view
@@ -21,7 +24,8 @@ public class MainPresenter {
             // Handle the camera action
         } else if (id == R.id.nav_companies) {
             view.startCompanyActivity()
-        } else if (id == R.id.nav_category) {
+        } else if (id == R.id.nav_purchaseOrder) {
+            view.startPurchaseOrderActivity()
 
         } else if (id == R.id.nav_aboutus) {
 

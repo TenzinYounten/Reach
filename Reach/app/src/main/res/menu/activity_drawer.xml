@@ -11,9 +11,9 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="Companies" />
         <item
-            android:id="@+id/nav_category"
+            android:id="@+id/nav_purchaseOrder"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Categories" />
+            android:title="Purchase Order" />
         <item
             android:id="@+id/nav_aboutus"
             android:icon="@drawable/ic_menu_manage"

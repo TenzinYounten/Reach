@@ -8,10 +8,10 @@ import io.realm.annotations.RealmClass;
  */
 @RealmClass
 public class CompanyDB extends RealmObject {
-    Long id;
-    String companyCode;
-    String companyName;
-    Boolean active;
+    private Long id;
+    private String companyCode;
+    private String companyName;
+    private Boolean active;
 
     public Long getId() {
         return id;

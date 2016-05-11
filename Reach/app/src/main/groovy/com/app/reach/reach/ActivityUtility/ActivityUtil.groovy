@@ -4,6 +4,8 @@ import android.content.Intent
 import com.app.reach.reach.Company.CompanyActivity
 import com.app.reach.reach.Login.LoginActivity
 import com.app.reach.reach.Main.MainActivity
+import com.app.reach.reach.ViewPurchaseOrder.PurchaseOrderActivity
+
 /**
  * Created by tenzin on 3/3/16.
  */
@@ -38,6 +40,10 @@ public class ActivityUtil {
 
     public void startOrderLineListItemsActivity(Intent intent) {
         context.startActivity(intent)
+    }
+
+    public void startPurchaseOrderActivity() {
+        context.startActivity(new Intent(context, PurchaseOrderActivity.class))
     }
 }
 

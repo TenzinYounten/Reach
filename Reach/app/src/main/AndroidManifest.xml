@@ -47,10 +47,11 @@
             android:name=".ProductDetails.ProductDetailsActivity"
             android:label="Reach"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".OrderLineListItem.OrderLineListItemActivity"
+        <activity
+            android:name=".OrderLineListItem.OrderLineListItemActivity"
             android:label="Reach"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ViewPurchaseOrder.PurchaseOrderActivity"></activity>
     </application>
 
 </manifest>

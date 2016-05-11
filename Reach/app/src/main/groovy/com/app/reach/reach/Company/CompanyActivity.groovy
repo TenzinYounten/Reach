@@ -31,6 +31,7 @@ public class CompanyActivity extends AppCompatActivity implements NavigationView
     CompanyPresenter presenter
     CompanyView view
 
+
     SuccessfulLoginEvent event
     private EventBus bus = EventBus.getDefault();
     ListView listView

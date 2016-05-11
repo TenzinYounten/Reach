@@ -1,8 +1,11 @@
 package com.app.reach.ReachEndPoint
+
 import com.app.reach.model.AunthenticatedUser
 import com.app.reach.model.Company
 import com.app.reach.model.OrderlineListItem
+import com.app.reach.model.PurchaseOrder.CallBackPurchasedOrder
 import com.app.reach.reach.Login.LoginData
+import com.app.reach.reach.OrderLineListItem.SyncOrder
 import retrofit2.Call
 import retrofit2.http.*
 /**
@@ -24,4 +27,7 @@ public interface ReachEndpointInterface {
 
     @GET("api/company/{companyId}/product/{productId}")
     Call<OrderlineListItem> getProduct(@Header("Authorization")String access_token, @Path("companyId")Long companyId, @Path("productId") Long productId )
+
+    @POST("api/purchaseOrder")
+    Call<CallBackPurchasedOrder> getPurchasedOrder(@Header("Authorization")String access_token, @Body SyncOrder syncOrder )
 }

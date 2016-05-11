@@ -8,15 +8,15 @@ import io.realm.annotations.RealmClass;
  */
 @RealmClass
 public class ProductDB extends RealmObject {
-    Long id;
-    String productCode;
-    String name;
-    String companyId;
-    String productDescription;
-    Double mrpPrice;
-    Double sellingPriceWithoutTax;
-    Double sellingPriceWithTax;
-    Integer quantity;
+    private Long id;
+    private String productCode;
+    private String name;
+    private String companyId;
+    private String productDescription;
+    private Double mrpPrice;
+    private Double sellingPriceWithoutTax;
+    private Double sellingPriceWithTax;
+    private Integer quantity;
 
     public Integer getQuantity() {
         return quantity;

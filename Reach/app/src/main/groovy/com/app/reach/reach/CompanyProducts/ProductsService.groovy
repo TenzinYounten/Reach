@@ -73,8 +73,6 @@ public class ProductsService {
                     Log.d("productListDb", "" + productListDB.productListDB.name)
                     /* productListDB.setDate(lastTimeOfUpdate)
                      Log.d("final Product",""+productListDB.date)*/
-
-
                 }
                 ArrayList<OrderlineListItem> productL = response.body()
                 event = new SuccessfulGetProductsEvent(productListDB.getProductListDB())
